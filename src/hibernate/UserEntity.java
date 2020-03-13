@@ -4,33 +4,60 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Entity
-@Table(name = "user", schema = "leboncoin", catalog = "")
+@Table(name = "user")
 public class UserEntity {
-    private int iduser;
 
     @Id
     @Column(name = "iduser", nullable = false)
+    private int idUser;
+
+    @Column(name="nom", nullable = false)
+    private String nom;
+
+    @Column(name="prenom", nullable = false)
+    private String prenom;
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        Pattern p = Pattern.compile(".*@.*\\..+");
+        Matcher m = p.matcher(mail);
+        if(m.matches()) {
+            this.mail = mail;
+        }
+    }
+
+    @Column(name="mail")
+    private String mail;
+
     public int getIduser() {
-        return iduser;
+        return idUser;
     }
 
-    public void setIduser(int iduser) {
-        this.iduser = iduser;
+    public void setIduser(int idUser) {
+        this.idUser = idUser;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserEntity that = (UserEntity) o;
-        return iduser == that.iduser;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(iduser);
-    }
 }
