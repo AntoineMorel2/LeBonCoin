@@ -42,7 +42,7 @@ public class UserEntity {
     }
 
     public void setMail(String mail) {
-        Pattern p = Pattern.compile(".*@.*\\..+");
+        Pattern p = Pattern.compile(".+@.+\\..+");
         Matcher m = p.matcher(mail);
         if(m.matches()) {
             this.mail = mail;

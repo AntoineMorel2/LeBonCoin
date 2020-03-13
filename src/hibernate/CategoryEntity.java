@@ -7,12 +7,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "category")
-public class Category {
-    private int idCategory;
-    private String name;
+public class CategoryEntity {
 
     @Id
-    @Column(name = "idCategory", nullable = false)
+    @Column(name = "idcategory", nullable = false)
+    private int idCategory;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
     public int getIdCategory() {
         return idCategory;
     }
@@ -21,7 +24,6 @@ public class Category {
         this.idCategory = idCategory;
     }
 
-    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }

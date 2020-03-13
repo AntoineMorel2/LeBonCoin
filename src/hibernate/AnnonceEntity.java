@@ -5,18 +5,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "annonce")
 public class AnnonceEntity {
 
     @Id
-    @Column(name="idAnnonce", nullable = false)
+    @Column(name="idannonce", nullable = false)
     private int idAnnonce;
     @Column(name="iduser", nullable = false)
     private int idUser;
-    @Column(name="idCategory", nullable = false)
+    @Column(name="idcategory", nullable = false)
     private int idCategory;
     @Column(name="title", nullable = false)
     private String title;
@@ -25,7 +25,7 @@ public class AnnonceEntity {
     @Column(name="sold")
     private boolean sold;
     @Column(name="datecreation", nullable = false)
-    private Timestamp dateCreation;
+    private LocalDate dateCreation;
     @Column(name="price")
     private float price;
 
@@ -77,11 +77,11 @@ public class AnnonceEntity {
         this.sold = sold;
     }
 
-    public Timestamp getDateCreation() {
+    public LocalDate getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(Timestamp dateCreation) {
+    public void setDateCreation(LocalDate dateCreation) {
         this.dateCreation = dateCreation;
     }
 
