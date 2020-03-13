@@ -4,8 +4,10 @@ import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import view.AccueilView;
 
 import javax.persistence.metamodel.EntityType;
+import javax.swing.*;
 
 import java.util.Map;
 
@@ -40,6 +42,11 @@ public class Main {
                     System.out.println("  " + o);
                 }
             }
+            JFrame frame = new JFrame("AccueilView");
+            frame.setContentPane(new AccueilView().accueil);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.pack();
+            frame.setVisible(true);
         } finally {
             session.close();
         }
