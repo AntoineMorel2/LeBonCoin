@@ -23,18 +23,18 @@ DROP TABLE IF EXISTS `annonce`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `annonce` (
-  `idAnnonce` int NOT NULL,
+  `idannonce` int NOT NULL,
   `iduser` int NOT NULL,
   `title` varchar(45) NOT NULL,
   `description` longtext,
   `sold` tinyint DEFAULT NULL,
   `datecreation` timestamp NOT NULL,
   `price` float DEFAULT NULL,
-  `idCategory` int NOT NULL,
-  PRIMARY KEY (`idAnnonce`),
+  `idcategory` int NOT NULL,
+  PRIMARY KEY (`idannonce`),
   KEY `iduser_idx` (`iduser`),
-  KEY `idcategory_idx` (`idCategory`),
-  CONSTRAINT `idcategory` FOREIGN KEY (`idCategory`) REFERENCES `category` (`idcategory`),
+  KEY `idcategory_idx` (`idcategory`),
+  CONSTRAINT `idcategory` FOREIGN KEY (`idcategory`) REFERENCES `category` (`idcategory`),
   CONSTRAINT `iduser` FOREIGN KEY (`iduser`) REFERENCES `user` (`iduser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -80,15 +80,15 @@ DROP TABLE IF EXISTS `comment`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `comment` (
   `idcomment` int NOT NULL,
-  `idAnnonce` int NOT NULL,
-  `idUser` int NOT NULL,
-  `timestamp` timestamp NULL DEFAULT NULL,
+  `idannonce` int NOT NULL,
+  `iduser` int NOT NULL,
+  `date` date DEFAULT NULL,
   `comment` longtext,
   PRIMARY KEY (`idcomment`),
-  KEY `iduser_idx` (`idUser`),
-  KEY `idannonce_idx` (`idAnnonce`),
-  CONSTRAINT `idannonce` FOREIGN KEY (`idAnnonce`) REFERENCES `annonce` (`idAnnonce`),
-  CONSTRAINT `idUserComment` FOREIGN KEY (`idUser`) REFERENCES `user` (`iduser`)
+  KEY `iduser_idx` (`iduser`),
+  KEY `idannonce_idx` (`idannonce`),
+  CONSTRAINT `idannonce` FOREIGN KEY (`idannonce`) REFERENCES `annonce` (`idannonce`),
+  CONSTRAINT `idUserComment` FOREIGN KEY (`iduser`) REFERENCES `user` (`iduser`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -115,7 +115,7 @@ CREATE TABLE `image` (
   `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idimage`),
   KEY `idAnnonceImage_idx` (`idAnnonce`),
-  CONSTRAINT `idAnnonceImage` FOREIGN KEY (`idAnnonce`) REFERENCES `annonce` (`idAnnonce`)
+  CONSTRAINT `idAnnonceImage` FOREIGN KEY (`idAnnonce`) REFERENCES `annonce` (`idannonce`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -162,4 +162,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-13 11:14:04
+-- Dump completed on 2020-03-13 14:04:12
