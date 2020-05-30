@@ -52,11 +52,11 @@ public class UserEntity {
     @Column(name="mail")
     private String mail;
 
-    public int getIduser() {
+    public int getIdUser() {
         return idUser;
     }
 
-    public void setIduser(int idUser) {
+    public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
 
