@@ -30,17 +30,18 @@ public abstract class DAO<T> {
      * crée une entityManagerFactory appelée sessionFactory
      * permet la liaison à la base de données
      *
-     * @throws PersistenceException
+     * @throws PersistenceException lance une exception lorsque que la création d'une entityManagerFactory est impossible
      */
     private static void buildSessionFactory() throws PersistenceException {
         sessionFactory = Persistence.createEntityManagerFactory("leBonCoinEM");
     }
 
+
     /**
      * crée une EntityManager permettant la manipulation de données en base
      *
      * @return EntityManager
-     * @throws PersistenceException
+     * @throws PersistenceException lance une exception lorsque que la création d'une entityManager est impossible
      */
     static EntityManager getEntityManager() throws PersistenceException {
         if (getSessionFactory() == null) {
