@@ -4,16 +4,14 @@ import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import view.AccueilView;
+import view.SignInView;
 
 import javax.persistence.metamodel.EntityType;
 import javax.swing.*;
 
-import java.util.Map;
-
 public class Main {
     private static final SessionFactory ourSessionFactory;
-    private static AccueilView accueilView;
+    private static SignInView signInView;
 
     static {
         try {
@@ -33,7 +31,7 @@ public class Main {
     public static void main(final String[] args) throws Exception {
         final Session session = getSession();
         try {
-            accueilView = new AccueilView();
+            signInView = new SignInView();
             System.out.println("querying all the managed entities...");
             final Metamodel metamodel = session.getSessionFactory().getMetamodel();
             for (EntityType<?> entityType : metamodel.getEntities()) {
@@ -45,10 +43,10 @@ public class Main {
                 }
             }
             //JFrame frame = new JFrame("AccueilView");
-            accueilView.setContentPane(accueilView.accueil);
-            accueilView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            accueilView.pack();
-            accueilView.setVisible(true);
+            signInView.setContentPane(signInView.accueil);
+            signInView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            signInView.pack();
+            signInView.setVisible(true);
         } finally {
             session.close();
         }
