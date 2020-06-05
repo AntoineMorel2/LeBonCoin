@@ -13,10 +13,14 @@ public class SignUpForm extends JFrame{
     private JTextField textField2;
     private JButton inscriptionButton;
 
+    private AnnonceView annonceView = new AnnonceView();
+
     public SignUpForm() {
         add(signUpPanel);
 
         setTitle("Inscription");
         setPreferredSize(new Dimension(500, 500));
+
+        //signUpPanel.add(annonceView, new com.intellij.uiDesigner.core.GridConstraints());
     }
 }

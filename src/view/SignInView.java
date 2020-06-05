@@ -17,7 +17,7 @@ public class SignInView extends JFrame {
 
     private static SignUpForm signUpForm;
 
-    public SignInView() throws IOException {
+    public SignInView() {
         add(accueil);
 
         setTitle("Connexion");
