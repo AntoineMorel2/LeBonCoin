@@ -61,6 +61,27 @@ public class ImageDAO extends DAO<ImageEntity> {
     }
 
     /**
+     * Cherche une entité Image depuis la base de données en fonction de l'idAnnonce donnée
+     *
+     * @param annonceId l'id de l'annonce possedant l'image
+     * @return ImageEntity
+     */
+    public ImageEntity fetchbyAnnonceId(int annonceId) {
+        EntityManager em = null;
+        try {
+            em = DAO.getEntityManager();
+            return em.find(ImageEntity.class, annonceId);
+        } catch (PersistenceException e) {
+            System.out.println("Unable to find image with annonceId " + annonceId);
+            return null;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    /**
      * Cherche toutes les entités Image depuis la base de données
      *
      * @return List de ImageEntity

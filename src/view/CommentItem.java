@@ -10,8 +10,11 @@ public class CommentItem extends JPanel{
     private JLabel lb_comment;
 
 
-    public CommentItem(){
+    public CommentItem(String comment, String nom, String date) {
         add(jp_comment);
+        lb_nom.setText(nom);
+        lb_date.setText(date);
+        lb_comment.setText(comment);
         setPreferredSize(new Dimension(100, 50));
     }
 
