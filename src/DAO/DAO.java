@@ -18,10 +18,9 @@ public abstract class DAO<T> {
     public abstract boolean create(T obj);
     public abstract T fetch(int id);
     public abstract Collection<T> fetchAll();
-    public abstract Collection<T> fetchByName();
+    public abstract Collection<T> fetchByName(String name);
     public abstract boolean update(T obj);
     public abstract boolean delete(T obj);
-    public abstract void close(); // Connection closure of the data source
 
     private static EntityManagerFactory getSessionFactory() {
         return sessionFactory;
