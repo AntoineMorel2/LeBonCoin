@@ -15,11 +15,27 @@ public class UserEntity {
     @Column(name = "iduser", nullable = false)
     private int idUser;
 
-    @Column(name="nom", nullable = false)
+    @Column(name = "nom", nullable = false)
     private String nom;
 
-    @Column(name="prenom", nullable = false)
+    @Column(name = "prenom", nullable = false)
     private String prenom;
+
+    @Column(name = "mail")
+    private String mail;
+
+    @Column(name = "password")
+    private String password;
+
+    public UserEntity() {
+    }
+
+    public UserEntity(String nom, String prenom, String mail, String password) {
+        this.nom = nom;
+        this.prenom = prenom;
+        setMail(mail);
+        this.password = password;
+    }
 
     public String getNom() {
         return nom;
@@ -42,22 +58,27 @@ public class UserEntity {
     }
 
     public void setMail(String mail) {
-        Pattern p = Pattern.compile(".*@.*\\..+");
+        Pattern p = Pattern.compile(".+@.+\\..+");
         Matcher m = p.matcher(mail);
         if(m.matches()) {
             this.mail = mail;
         }
     }
 
-    @Column(name="mail")
-    private String mail;
-
-    public int getIduser() {
+    public int getIdUser() {
         return idUser;
     }
 
-    public void setIduser(int idUser) {
+    public void setIdUser(int idUser) {
         this.idUser = idUser;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
