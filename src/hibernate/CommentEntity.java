@@ -25,6 +25,16 @@ public class CommentEntity {
     @Column(name = "comment")
     private String comment;
 
+    public CommentEntity() {
+    }
+
+    public CommentEntity(int idAnnonce, int idUser, LocalDate date, String comment) {
+        this.idAnnonce = idAnnonce;
+        this.idUser = idUser;
+        this.date = date;
+        this.comment = comment;
+    }
+
     public int getIdComment() {
         return idComment;
     }

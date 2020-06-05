@@ -11,14 +11,24 @@ import javax.persistence.Table;
 public class ImageEntity {
 
     @Id
-    @Column(name="idimage", nullable = false)
+    @Column(name = "idimage", nullable = false)
     private int idImage;
-    @Column(name="idAnnonce", nullable = false)
+    @Column(name = "idAnnonce", nullable = false)
     private int idAnnonce;
-    @Column(name="path")
+    @Column(name = "path")
     private String path;
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
+
+    public ImageEntity() {
+    }
+
+    public ImageEntity(int idAnnonce, String path, String name) {
+        this.idAnnonce = idAnnonce;
+        this.path = path;
+        this.name = name;
+    }
+
 
     public int getIdImage() {
         return idImage;

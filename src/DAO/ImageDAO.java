@@ -5,6 +5,7 @@ import hibernate.ImageEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.persistence.RollbackException;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,7 +25,9 @@ public class ImageDAO extends DAO<ImageEntity> {
         EntityManager em = null;
         try {
             em = DAO.getEntityManager();
+            em.getTransaction().begin();
             em.persist(img);
+            em.getTransaction().commit();
             return true;
         } catch (PersistenceException e) {
             System.out.println("Unable to create ImageEntity " + img);
@@ -102,7 +105,9 @@ public class ImageDAO extends DAO<ImageEntity> {
         EntityManager em = null;
         try {
             em = DAO.getEntityManager();
+            em.getTransaction().begin();
             em.merge(img);
+            em.getTransaction().commit();
             return true;
         } catch (PersistenceException e) {
             System.out.println("Unable to update ImageEntity: " + img);
@@ -123,11 +128,22 @@ public class ImageDAO extends DAO<ImageEntity> {
     public boolean delete(ImageEntity img) {
         EntityManager em = null;
         try {
-            em = DAO.getEntityManager();
-            em.remove(img);
+            em = getEntityManager();
+            em.getTransaction().begin();
+            final Query query;
+            query = em.createQuery("DELETE FROM ImageEntity WHERE idImage LIKE :idToDelete ");
+            query.setParameter("idToDelete", img.getIdImage());
+            query.executeUpdate();
+            em.getTransaction().commit();
             return true;
+        } catch (RollbackException r) {
+            if (em != null) {
+                em.getTransaction().rollback();
+            }
+            System.out.println("Could not delete the Image with idImage " + img.getIdImage());
+            return false;
         } catch (PersistenceException e) {
-            System.out.println("Unable to delete ImageEntity: " + img);
+            System.out.println("Could not delete the Image with idImage " + img.getIdImage());
             return false;
         } finally {
             if (em != null) {

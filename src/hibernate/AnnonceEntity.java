@@ -20,14 +20,27 @@ public class AnnonceEntity {
     private int idCategory;
     @Column(name="title", nullable = false)
     private String title;
-    @Column(name="description")
+    @Column(name = "description")
     private String description;
-    @Column(name="sold")
+    @Column(name = "sold")
     private boolean sold;
-    @Column(name="datecreation", nullable = false)
+    @Column(name = "datecreation", nullable = false)
     private LocalDate dateCreation;
-    @Column(name="price")
+    @Column(name = "price")
     private float price;
+
+    public AnnonceEntity() {
+    }
+
+    public AnnonceEntity(int idUser, int idCategory, String title, String description, boolean sold, LocalDate dateCreation, float price) {
+        this.idUser = idUser;
+        this.idCategory = idCategory;
+        this.title = title;
+        this.description = description;
+        this.sold = sold;
+        this.dateCreation = dateCreation;
+        this.price = price;
+    }
 
     public int getIdAnnonce() {
         return idAnnonce;

@@ -147,8 +147,7 @@ public class CommentDAO extends DAO<CommentEntity> {
             entityManager = getEntityManager();
             entityManager.getTransaction().begin();
             final Query query;
-            query = entityManager.createQuery("DELETE FROM CategoryEntity WHERE :comment LIKE :idToDelete ", CommentEntity.class);
-            query.setParameter("comment", "idcomment");
+            query = entityManager.createQuery("DELETE FROM CommentEntity WHERE idComment LIKE :idToDelete ");
             query.setParameter("idToDelete", obj.getIdComment());
             query.executeUpdate();
             entityManager.getTransaction().commit();

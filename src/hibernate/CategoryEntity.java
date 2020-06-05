@@ -16,6 +16,13 @@ public class CategoryEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
+    public CategoryEntity() {
+    }
+
+    public CategoryEntity(String name) {
+        this.name = name;
+    }
+
     public int getIdCategory() {
         return idCategory;
     }

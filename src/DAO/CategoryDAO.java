@@ -149,8 +149,7 @@ public class CategoryDAO extends DAO<CategoryEntity> {
             entityManager = getEntityManager();
             entityManager.getTransaction().begin();
             final Query query;
-            query = entityManager.createQuery("DELETE FROM CategoryEntity WHERE :category LIKE :idToDelete ", CategoryEntity.class);
-            query.setParameter("category", "idcategory");
+            query = entityManager.createQuery("DELETE FROM CategoryEntity WHERE idCategory LIKE :idToDelete ");
             query.setParameter("idToDelete", obj.getIdCategory());
             query.executeUpdate();
             entityManager.getTransaction().commit();

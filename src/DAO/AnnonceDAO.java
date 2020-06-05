@@ -55,9 +55,8 @@ public class AnnonceDAO extends DAO<AnnonceEntity>{
         try{
             entityManager = getEntityManager();
             final Query query;
-            query = entityManager.createQuery("SELECT a FROM AnnonceEntity a WHERE :user  LIKE :idUser",AnnonceEntity.class);
-            query.setParameter("user","iduser");
-            query.setParameter("idUser",idUser);
+            query = entityManager.createQuery("SELECT a FROM AnnonceEntity a WHERE idUser  LIKE :idUser", AnnonceEntity.class);
+            query.setParameter("idUser", idUser);
             return (List<AnnonceEntity>) query.getResultList();
         } catch(PersistenceException e){
             System.out.println("Unable to fetch the AnnonceEntity from the user with id " + idUser);
@@ -125,18 +124,16 @@ public class AnnonceDAO extends DAO<AnnonceEntity>{
     @SuppressWarnings("unchecked")
     public List<AnnonceEntity> fetchByName(String name) {
         EntityManager entityManager = null;
-        try{
+        try {
             entityManager = getEntityManager();
             final Query query;
-            query = entityManager.createQuery("SELECT a FROM AnnonceEntity a WHERE :nom LIKE :name", AnnonceEntity.class);
-            query.setParameter("nom", "name");
-            query.setParameter("name","%"+name+"%");
+            query = entityManager.createQuery("SELECT a FROM AnnonceEntity a WHERE title LIKE :name", AnnonceEntity.class);
+            query.setParameter("name", "%" + name + "%");
             return (List<AnnonceEntity>) query.getResultList();
-        } catch(PersistenceException e){
+        } catch (PersistenceException e) {
             System.out.println("Unable to fetch the AnnonceEntity with the following name " + name);
             return null;
-        }
-        finally{
+        } finally {
             if(entityManager != null) {
                 entityManager.close();
             }
@@ -185,8 +182,7 @@ public class AnnonceDAO extends DAO<AnnonceEntity>{
             entityManager = getEntityManager();
             entityManager.getTransaction().begin();
             final Query query;
-            query = entityManager.createQuery("DELETE FROM AnnonceEntity WHERE :annonce LIKE :idToDelete ",AnnonceEntity.class);
-            query.setParameter("annonce","idannonce");
+            query = entityManager.createQuery("DELETE FROM AnnonceEntity WHERE idAnnonce LIKE :idToDelete ");
             query.setParameter("idToDelete", obj.getIdAnnonce());
             query.executeUpdate();
             entityManager.getTransaction().commit();

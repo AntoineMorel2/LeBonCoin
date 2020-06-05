@@ -5,6 +5,7 @@ import hibernate.UserEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.persistence.RollbackException;
 import java.util.List;
 
 /**
@@ -21,7 +22,9 @@ public class UserDAO extends DAO<UserEntity> {
         EntityManager em = null;
         try {
             em = DAO.getEntityManager();
+            em.getTransaction().begin();
             em.persist(user);
+            em.getTransaction().commit();
             return true;
         } catch (PersistenceException e) {
             System.out.println("Unable to create UserEntity " + user);
@@ -90,10 +93,8 @@ public class UserDAO extends DAO<UserEntity> {
         try {
             em = DAO.getEntityManager();
             final Query query;
-            query = em.createQuery("SELECT u FROM UserEntity u WHERE :nom like :name OR :prenom like :name");
+            query = em.createQuery("SELECT u FROM UserEntity u WHERE nom like :name OR prenom like :name");
             query.setParameter("name", "%" + name + "%");
-            query.setParameter("nom", "nom");
-            query.setParameter("prenom", "prenom");
             return (List<UserEntity>) query.getResultList();
         } catch (PersistenceException e) {
             System.out.println("Unable to fetch UserEntity with name: " + name);
@@ -114,7 +115,9 @@ public class UserDAO extends DAO<UserEntity> {
         EntityManager em = null;
         try {
             em = DAO.getEntityManager();
+            em.getTransaction().begin();
             em.merge(user);
+            em.getTransaction().commit();
             return true;
         } catch (PersistenceException e) {
             System.out.println("Unable to update UserEntity: " + user);
@@ -134,11 +137,22 @@ public class UserDAO extends DAO<UserEntity> {
     public boolean delete(UserEntity user) {
         EntityManager em = null;
         try {
-            em = DAO.getEntityManager();
-            em.remove(user);
+            em = getEntityManager();
+            em.getTransaction().begin();
+            final Query query;
+            query = em.createQuery("DELETE FROM UserEntity WHERE idUser LIKE :idToDelete ");
+            query.setParameter("idToDelete", user.getIdUser());
+            query.executeUpdate();
+            em.getTransaction().commit();
             return true;
+        } catch (RollbackException r) {
+            if (em != null) {
+                em.getTransaction().rollback();
+            }
+            System.out.println("Could not delete the User with idUser " + user.getIdUser());
+            return false;
         } catch (PersistenceException e) {
-            System.out.println("Unable to delete UserEntity: " + user);
+            System.out.println("Could not delete the User with idUser " + user.getIdUser());
             return false;
         } finally {
             if (em != null) {
