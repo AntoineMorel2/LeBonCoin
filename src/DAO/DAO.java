@@ -31,7 +31,7 @@ public abstract class DAO<T> {
         sessionFactory = Persistence.createEntityManagerFactory("leBonCoinEM");
     }
 
-    protected static EntityManager getEntityManager() throws PersistenceException{
+    static EntityManager getEntityManager() throws PersistenceException{
         if(getSessionFactory() == null){
             buildSessionFactory();
         }
