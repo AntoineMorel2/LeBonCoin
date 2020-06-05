@@ -1,5 +1,9 @@
 package view;
 
+import DAO.UserDAO;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import hibernate.UserEntity;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,6 +17,7 @@ public class SignInView extends JFrame {
     private ImageIcon logo;
 
     private static SignUpView signUpView;
+//    private static AnnoncesView annoncesView;
 
     public SignInView() {
         add(accueil);
@@ -20,6 +25,20 @@ public class SignInView extends JFrame {
         setTitle("Connexion");
         setPreferredSize(new Dimension(500, 500));
         addLogo();
+
+        connexion.addActionListener(actionEvent -> {
+            System.out.println("Connection click");
+            UserDAO userDAO = new UserDAO();
+            String mail = textField1.getText();
+            String password = Base64.encode((new String(passwordField1.getPassword())).getBytes());
+            UserEntity user = userDAO.checkConnection(mail, password);
+            if (user != null) {
+                System.out.println("l'utilisateur " + user.getMail() + " est connecté");
+            } else {
+                JOptionPane.showInternalMessageDialog(accueil, "Votre login et votre mot de passe ne correspondent pas.");
+            }
+
+        });
 
         inscrivezVousButton.addActionListener(actionEvent -> {
             //JOptionPane.showMessageDialog(accueil, "aahajgkdsg");
@@ -34,10 +53,10 @@ public class SignInView extends JFrame {
 
     }
 
+    /**
+     * AJout + redimensionnement de l'image
+     */
     public void addLogo() {
-        /**
-         * AJout + redimensionnement de l'image
-         */
         logo = new ImageIcon(getClass().getResource("../ressources/logo.png")); // load the image to a imageIcon
         Image image = logo.getImage(); // transform it
         Image newimg = image.getScaledInstance(120, 30, Image.SCALE_SMOOTH); // scale it the smooth way
