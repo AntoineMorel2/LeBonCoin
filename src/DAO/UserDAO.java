@@ -106,8 +106,45 @@ public class UserDAO extends DAO<UserEntity> {
         }
     }
 
+    /**
+     * Cherche l'utilisateur par nom et mot de passe
+     *
+     * @return List de UserEntity
+     */
+    @SuppressWarnings("unchecked")
+    public List<UserEntity> fetchByMail(String mail) {
+        EntityManager em = null;
+        try {
+            em = DAO.getEntityManager();
+            final Query query;
+            query = em.createQuery("SELECT u FROM UserEntity u WHERE mail like :mail");
+            query.setParameter("mail", mail);
+            return (List<UserEntity>) query.getResultList();
+        } catch (PersistenceException e) {
+            System.out.println("Unable to fetch UserEntity with mail: " + mail);
+            return null;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
 
-    /**Modifie l'entité User avec les valeurs de user
+    public UserEntity checkConnection(String mail, String password) {
+        List<UserEntity> userListByMail = fetchByMail(mail);
+        for (UserEntity userEntity : userListByMail) {
+            if (mail.equals(userEntity.getMail()) && password.equals(userEntity.getPassword())) {
+                return userEntity;
+            }
+        }
+        System.out.println("Unable to connect to user " + mail);
+        return null;
+    }
+
+
+    /**
+     * Modifie l'entité User avec les valeurs de user
+     *
      * @return boolean
      */
     @Override
