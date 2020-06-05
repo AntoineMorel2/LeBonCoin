@@ -1,10 +1,5 @@
 package DAO;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -16,23 +11,39 @@ public abstract class DAO<T> {
     private static volatile EntityManagerFactory sessionFactory;
 
     public abstract boolean create(T obj);
+
     public abstract T fetch(int id);
+
     public abstract Collection<T> fetchAll();
+
     public abstract Collection<T> fetchByName(String name);
+
     public abstract boolean update(T obj);
+
     public abstract boolean delete(T obj);
 
     private static EntityManagerFactory getSessionFactory() {
         return sessionFactory;
     }
 
-
-    private static void buildSessionFactory() throws PersistenceException{
+    /**
+     * crée une entityManagerFactory appelée sessionFactory
+     * permet la liaison à la base de données
+     *
+     * @throws PersistenceException
+     */
+    private static void buildSessionFactory() throws PersistenceException {
         sessionFactory = Persistence.createEntityManagerFactory("leBonCoinEM");
     }
 
-    static EntityManager getEntityManager() throws PersistenceException{
-        if(getSessionFactory() == null){
+    /**
+     * crée une EntityManager permettant la manipulation de données en base
+     *
+     * @return EntityManager
+     * @throws PersistenceException
+     */
+    static EntityManager getEntityManager() throws PersistenceException {
+        if (getSessionFactory() == null) {
             buildSessionFactory();
         }
         return getSessionFactory().createEntityManager();
