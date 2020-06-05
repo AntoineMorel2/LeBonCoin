@@ -37,7 +37,6 @@ public class CreateAnnonce extends JFrame {
                 int returnvalue = fc.showOpenDialog(createannonce);
                 if(returnvalue == JFileChooser.APPROVE_OPTION){
                     File selectedFile = fc.getSelectedFile();
-                    JOptionPane.showMessageDialog(createannonce, "chemin du fichier :" +selectedFile);
                     try {
                         BufferedImage myPicture = ImageIO.read(selectedFile);
                         ImageIcon pic = new ImageIcon(myPicture);
