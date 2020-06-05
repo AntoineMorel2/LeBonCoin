@@ -7,8 +7,11 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import java.util.List;
 
+/**
+ * @author AMorel / VPingrenon
+ * Cette DAO est utilisée pour toutes les requêtes en rapport avec les Users
+ */
 public class UserDAO extends DAO<UserEntity> {
-
 
     /**crée une entité User en base de données
      * @return boolean
@@ -65,7 +68,7 @@ public class UserDAO extends DAO<UserEntity> {
             query = em.createQuery("SELECT u FROM UserEntity u", UserEntity.class);
             return (List<UserEntity>) query.getResultList();
         } catch (PersistenceException e) {
-            System.out.println("Unable to fecth all UserEntity");
+            System.out.println("Unable to fetch all UserEntity");
             return null;
         } finally {
             if (em != null) {
@@ -87,8 +90,10 @@ public class UserDAO extends DAO<UserEntity> {
         try {
             em = DAO.getEntityManager();
             final Query query;
-            query = em.createQuery("SELECT u FROM UserEntity u WHERE nom like :name OR prenom like :name");
+            query = em.createQuery("SELECT u FROM UserEntity u WHERE :nom like :name OR :prenom like :name");
             query.setParameter("name", "%" + name + "%");
+            query.setParameter("nom", "nom");
+            query.setParameter("prenom", "prenom");
             return (List<UserEntity>) query.getResultList();
         } catch (PersistenceException e) {
             System.out.println("Unable to fetch UserEntity with name: " + name);
@@ -133,7 +138,7 @@ public class UserDAO extends DAO<UserEntity> {
             em.remove(user);
             return true;
         } catch (PersistenceException e) {
-            System.out.println("Unable to delete UserEnity: " + user);
+            System.out.println("Unable to delete UserEntity: " + user);
             return false;
         } finally {
             if (em != null) {
