@@ -5,9 +5,16 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 import java.util.Collection;
 
 public abstract class DAO<T> {
+
+    private static volatile EntityManagerFactory sessionFactory;
+
     public abstract boolean create(T obj);
     public abstract T fetch(int id);
     public abstract Collection<T> fetchAll();
@@ -16,20 +23,20 @@ public abstract class DAO<T> {
     public abstract boolean delete(T obj);
     public abstract void close(); // Connection closure of the data source
 
-    protected static final SessionFactory ourSessionFactory;
-
-    static {
-        try {
-            Configuration configuration = new Configuration();
-            configuration.configure();
-
-            ourSessionFactory = configuration.buildSessionFactory();
-        } catch (Throwable ex) {
-            throw new ExceptionInInitializerError(ex);
-        }
+    private static EntityManagerFactory getSessionFactory() {
+        return sessionFactory;
     }
-    protected static Session getSession() throws HibernateException {
-        return ourSessionFactory.openSession();
+
+
+    private static void buildSessionFactory() throws PersistenceException{
+        sessionFactory = Persistence.createEntityManagerFactory("leBonCoinEM");
+    }
+
+    protected static EntityManager getEntityManager() throws PersistenceException{
+        if(getSessionFactory() == null){
+            buildSessionFactory();
+        }
+        return getSessionFactory().createEntityManager();
     }
 }
 
