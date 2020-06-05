@@ -3,7 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-public class AnnonceView extends JPanel {
+public class AnnonceItemView extends JPanel {
     private ImageIcon logo;
     public JPanel annonceView;
     private JLabel titreAnnonce;
@@ -11,7 +11,7 @@ public class AnnonceView extends JPanel {
     private JLabel description;
     private JPanel imagePanel;
 
-    public AnnonceView() {
+    public AnnonceItemView() {
         add(annonceView);
 
         setPreferredSize(new Dimension(500, 200));

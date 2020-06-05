@@ -2,9 +2,6 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class SignInView extends JFrame {
     public JPanel accueil;
@@ -15,7 +12,7 @@ public class SignInView extends JFrame {
     private JLabel img;
     private ImageIcon logo;
 
-    private static SignUpForm signUpForm;
+    private static SignUpView signUpView;
 
     public SignInView() {
         add(accueil);
@@ -27,11 +24,11 @@ public class SignInView extends JFrame {
         inscrivezVousButton.addActionListener(actionEvent -> {
             //JOptionPane.showMessageDialog(accueil, "aahajgkdsg");
             System.out.println("click");
-            signUpForm = new SignUpForm();
-            signUpForm.setContentPane(signUpForm.signUpPanel);
+            signUpView = new SignUpView();
+            signUpView.setContentPane(signUpView.signUpPanel);
             //signUpForm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            signUpForm.pack();
-            signUpForm.setVisible(true);
+            signUpView.pack();
+            signUpView.setVisible(true);
 
         });
 

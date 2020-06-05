@@ -3,7 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-public class SignUpForm extends JFrame{
+public class SignUpView extends JFrame{
 
     public JPanel signUpPanel;
 
@@ -13,9 +13,9 @@ public class SignUpForm extends JFrame{
     private JTextField textField2;
     private JButton inscriptionButton;
 
-    private AnnonceView annonceView = new AnnonceView();
+    private AnnonceItemView annonceItemView = new AnnonceItemView();
 
-    public SignUpForm() {
+    public SignUpView() {
         add(signUpPanel);
 
         setTitle("Inscription");
