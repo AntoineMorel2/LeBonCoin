@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="view.AccueilView">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="view.SignInView">
   <grid id="27dc6" binding="accueil" layout-manager="GridBagLayout">
     <constraints>
       <xy x="76" y="54" width="427" height="448"/>

@@ -2,11 +2,8 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 
-public class AccueilView extends JFrame {
+public class SignInView extends JFrame {
     public JPanel accueil;
     private JPasswordField passwordField1;
     private JTextField textField1;
@@ -15,18 +12,24 @@ public class AccueilView extends JFrame {
     private JLabel img;
     private ImageIcon logo;
 
-    public AccueilView() throws IOException {
+    private static SignUpView signUpView;
+
+    public SignInView() {
         add(accueil);
 
-        setTitle("test");
+        setTitle("Connexion");
         setPreferredSize(new Dimension(500, 500));
         addLogo();
 
-        connexion.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                JOptionPane.showMessageDialog(accueil, "aahajgkdsg");
-            }
+        inscrivezVousButton.addActionListener(actionEvent -> {
+            //JOptionPane.showMessageDialog(accueil, "aahajgkdsg");
+            System.out.println("click");
+            signUpView = new SignUpView();
+            signUpView.setContentPane(signUpView.signUpPanel);
+            //signUpForm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            signUpView.pack();
+            signUpView.setVisible(true);
+
         });
 
     }
