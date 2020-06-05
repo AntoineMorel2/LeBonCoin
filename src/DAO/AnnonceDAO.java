@@ -128,7 +128,8 @@ public class AnnonceDAO extends DAO<AnnonceEntity>{
         try{
             entityManager = getEntityManager();
             final Query query;
-            query = entityManager.createQuery("SELECT a FROM AnnonceEntity a WHERE title LIKE :name",AnnonceEntity.class);
+            query = entityManager.createQuery("SELECT a FROM AnnonceEntity a WHERE :nom LIKE :name", AnnonceEntity.class);
+            query.setParameter("nom", "name");
             query.setParameter("name","%"+name+"%");
             return (List<AnnonceEntity>) query.getResultList();
         } catch(PersistenceException e){
@@ -171,6 +172,7 @@ public class AnnonceDAO extends DAO<AnnonceEntity>{
             }
         }
     }
+
     /**
      * Supprime l'objet donné en paramètre dans la base de donnée
      * @param obj L'objet a supprimé dans la base de donnée
