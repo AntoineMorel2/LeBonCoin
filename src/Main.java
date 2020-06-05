@@ -13,6 +13,7 @@ import java.util.Map;
 
 public class Main {
     private static final SessionFactory ourSessionFactory;
+    private static AccueilView accueilView;
 
     static {
         try {
@@ -32,6 +33,7 @@ public class Main {
     public static void main(final String[] args) throws Exception {
         final Session session = getSession();
         try {
+            accueilView = new AccueilView();
             System.out.println("querying all the managed entities...");
             final Metamodel metamodel = session.getSessionFactory().getMetamodel();
             for (EntityType<?> entityType : metamodel.getEntities()) {
@@ -42,11 +44,11 @@ public class Main {
                     System.out.println("  " + o);
                 }
             }
-            JFrame frame = new JFrame("AccueilView");
-            frame.setContentPane(new AccueilView().accueil);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack();
-            frame.setVisible(true);
+            //JFrame frame = new JFrame("AccueilView");
+            accueilView.setContentPane(accueilView.accueil);
+            accueilView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            accueilView.pack();
+            accueilView.setVisible(true);
         } finally {
             session.close();
         }
