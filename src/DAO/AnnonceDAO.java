@@ -77,15 +77,39 @@ public class AnnonceDAO extends DAO<AnnonceEntity>{
     @Override
     public AnnonceEntity fetch(int id) {
         EntityManager entityManager = null;
-        try{
+        try {
             entityManager = getEntityManager();
-            return entityManager.find(AnnonceEntity.class,id);
-        } catch(PersistenceException e){
+            return entityManager.find(AnnonceEntity.class, id);
+        } catch (PersistenceException e) {
             System.out.println("Unable to fetch the AnnonceEntity with the following id " + id);
             return null;
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
         }
-        finally{
-            if(entityManager != null) {
+    }
+
+
+    /**
+     * Cette méthode permet de récupèrer la dernière annonce créée par un utilisateur.
+     *
+     * @return une liste d'AnnonceEntité
+     */
+    @SuppressWarnings("unchecked")
+    public int fetchLast() {
+        EntityManager entityManager = null;
+        try {
+            entityManager = getEntityManager();
+            final Query query;
+            query = entityManager.createQuery("SELECT a FROM AnnonceEntity a ORDER BY idAnnonce DESC", AnnonceEntity.class);
+            AnnonceEntity annonceEntity = (AnnonceEntity) query.getResultList().get(0);
+            return annonceEntity.getIdAnnonce();
+        } catch (PersistenceException e) {
+            System.out.println("Unable to fetch the AnnonceEntity from the last Annonce");
+            return -1;
+        } finally {
+            if (entityManager != null) {
                 entityManager.close();
             }
         }
@@ -93,6 +117,7 @@ public class AnnonceDAO extends DAO<AnnonceEntity>{
 
     /**
      * Recupère une Liste de toutes les AnnonceEntité dans la base de donnée
+     *
      * @return Une liste d'AnnonceEntité ou null
      */
     @Override
