@@ -47,12 +47,12 @@ public class UserDAO extends DAO<UserEntity> {
     }
 
     @Override
-    public boolean delete(UserEntity obj) {
+    public boolean delete(UserEntity user) {
         try{
-            factory.getCurrentSession().delete(obj);
+            factory.getCurrentSession().delete(user);
             return true;
         }catch(Exception e){
-            logger.error("Cannot remove object " + obj + "\nException thrown: " + e);
+            logger.error("Cannot remove object " + user + "\nException thrown: " + e);
             return false;
         }
     }
