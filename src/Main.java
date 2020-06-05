@@ -34,16 +34,6 @@ public class Main {
             System.out.println("querying all the managed entities...");
            //accueilView = new AccueilView();
             //createannonce = new CreateAnnonce();
-           /* System.out.println("querying all the managed entities...");
-            final Metamodel metamodel = session.getSessionFactory().getMetamodel();
-            for (EntityType<?> entityType : metamodel.getEntities()) {
-                final String entityName = entityType.getName();
-                final Query query = session.createQuery("from " + entityName);
-                System.out.println("executing: " + query.getQueryString());
-                for (Object o : query.list()) {
-                    System.out.println("  " + o);
-                }
-            }*/
             //JFrame frame = new JFrame("AccueilView");
             signInView.setContentPane(signInView.accueil);
             signInView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
