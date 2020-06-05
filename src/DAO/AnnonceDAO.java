@@ -45,7 +45,7 @@ public class AnnonceDAO extends DAO<AnnonceEntity>{
     }
 
     /**
-     * Cette méthode permet de récupèrer toutes les annonces créée par un utilisateur.
+     * Cette méthode permet de récupèrer toutes les annonces créée par un utilisateur .
      * @param idUser l'id de l'utiliseur dont nous voulons les annonces
      * @return une liste d'AnnonceEntité
      */
