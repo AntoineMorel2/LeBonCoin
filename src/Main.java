@@ -1,17 +1,16 @@
 import org.hibernate.HibernateException;
-import org.hibernate.Metamodel;
-import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import view.CreateAnnonce;
 import view.SignInView;
 
-import javax.persistence.metamodel.EntityType;
 import javax.swing.*;
 
 public class Main {
     private static final SessionFactory ourSessionFactory;
     private static SignInView signInView;
+    private static CreateAnnonce createannonce;
 
     static {
         try {
@@ -33,6 +32,9 @@ public class Main {
         try {
             signInView = new SignInView();
             System.out.println("querying all the managed entities...");
+           //accueilView = new AccueilView();
+            //createannonce = new CreateAnnonce();
+           /* System.out.println("querying all the managed entities...");
             final Metamodel metamodel = session.getSessionFactory().getMetamodel();
             for (EntityType<?> entityType : metamodel.getEntities()) {
                 final String entityName = entityType.getName();
@@ -41,12 +43,20 @@ public class Main {
                 for (Object o : query.list()) {
                     System.out.println("  " + o);
                 }
-            }
+            }*/
             //JFrame frame = new JFrame("AccueilView");
             signInView.setContentPane(signInView.accueil);
             signInView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             signInView.pack();
             signInView.setVisible(true);
+//            accueilView.setContentPane(accueilView.accueil);
+//            accueilView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            accueilView.pack();
+//            accueilView.setVisible(true);
+
+           /* createannonce.setContentPane(createannonce.createannonce);
+            createannonce.pack();
+            createannonce.setVisible(true);*/
         } finally {
             session.close();
         }
