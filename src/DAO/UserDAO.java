@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import java.util.Collection;
+import java.util.List;
 
 public class UserDAO extends DAO<UserEntity> {
 
@@ -26,12 +27,12 @@ public class UserDAO extends DAO<UserEntity> {
     }
 
     @Override
-    public Collection<UserEntity> fetchAll() {
+    public List<UserEntity> fetchAll() {
         return null;
     }
 
     @Override
-    public Collection<UserEntity> fetchByName() {
+    public List<UserEntity> fetchByName() {
         return null;
     }
 
