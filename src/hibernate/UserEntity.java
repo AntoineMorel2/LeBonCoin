@@ -30,7 +30,7 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(String nom, String prenom, String mail, String password) {
+    public UserEntity(String nom, String prenom, String mail, String password) throws IllegalArgumentException {
         this.nom = nom;
         this.prenom = prenom;
         setMail(mail);
@@ -57,11 +57,13 @@ public class UserEntity {
         return mail;
     }
 
-    public void setMail(String mail) {
+    public void setMail(String mail) throws IllegalArgumentException {
         Pattern p = Pattern.compile(".+@.+\\..+");
         Matcher m = p.matcher(mail);
         if(m.matches()) {
             this.mail = mail;
+        } else {
+            throw new IllegalArgumentException("The mail doesn't match the pattern");
         }
     }
 

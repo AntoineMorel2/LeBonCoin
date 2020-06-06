@@ -10,7 +10,10 @@
         <property name="connection.username">root</property>
         <property name="connection.password">Rootroot1</property>
         <mapping class="hibernate.UserEntity"/>
-
+        <mapping class="hibernate.AnnonceEntity"/>
+        <mapping class="hibernate.CategoryEntity"/>
+        <mapping class="hibernate.CommentEntity"/>
+        <mapping class="hibernate.ImageEntity"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
     </session-factory>
