@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 public class AnnonceView extends JFrame{
     private JLabel lb_prix;
@@ -27,17 +26,22 @@ public class AnnonceView extends JFrame{
     private JPanel jp_image;
     private JButton acheterButton;
     public JPanel jp_annonce;
-    private JList list_comment;
     private JTextArea ta_comment;
     private JButton envoyerUnCommentaireButton;
     private JTextArea ta_description;
     private JLabel sold;
-    private java.util.List<CommentItem> tabComment = new ArrayList<>();
+    private JScrollPane scrollCommentaire;
+    private JPanel commentaires;
+    private static int index = 0;
 
     public AnnonceView(){
         add(jp_annonce);
+        ta_comment.setLineWrap(true);
         setTitle("Le détail d'une annonce");
-        setPreferredSize(new Dimension(1500, 1000));
+        setPreferredSize(new Dimension(1500, 600));
+        // redefinir le layout permet de placer les éléments soient les uns en dessous des autres
+        commentaires.setPreferredSize(new Dimension(900, 800));
+        commentaires.setLayout(new BoxLayout(commentaires, BoxLayout.Y_AXIS));
 
         AnnonceDAO annonceDAO = new AnnonceDAO();
         UserDAO userDAO = new UserDAO();
@@ -50,9 +54,9 @@ public class AnnonceView extends JFrame{
         for (CommentEntity coEntity : comment) {
             UserEntity userEntity = userDAO.fetch(coEntity.getIdUser());
             CommentItem newComment = new CommentItem(coEntity.getComment(), userEntity.getNom(), today);
-            tabComment.add(newComment);
+            newComment.setForeground(Color.white);
+            commentaires.add(newComment);
         }
-        list_comment.setListData(tabComment.toArray());
         String path = imageDAO.fetchbyAnnonceId(annonceEntity.getIdAnnonce()).getPath();
         File selectedFile = new File(path);
         try {
@@ -103,8 +107,9 @@ public class AnnonceView extends JFrame{
                 CommentItem currentComment = new CommentItem(ta_comment.getText(), user.getNom(), today);
                 CommentEntity comment = new CommentEntity(annonceEntity.getIdAnnonce(), user.getIdUser(), LocalDate.now(), ta_comment.getText());
                 commentDAO.create(comment);
-                tabComment.add(currentComment);
-                list_comment.setListData(tabComment.toArray());
+                currentComment.setForeground(Color.white);
+                commentaires.add(currentComment);
+                commentaires.updateUI();
                 ta_comment.setText("");
 
             }
