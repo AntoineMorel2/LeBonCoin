@@ -17,8 +17,7 @@ public class SignInView extends JFrame {
     private ImageIcon logo;
 
     private static SignUpView signUpView;
-    //    private static AnnoncesView annoncesView;
-    private static CreateAnnonce createAnnonce;
+    private static AnnoncesView annoncesView;
 
     public SignInView() {
         add(accueil);
@@ -28,16 +27,14 @@ public class SignInView extends JFrame {
         addLogo();
 
         connexion.addActionListener(actionEvent -> {
-            System.out.println("Connection click");
             UserDAO userDAO = new UserDAO();
             String mail = textField1.getText();
             String password = Base64.encode((new String(passwordField1.getPassword())).getBytes());
             UserEntity user = userDAO.checkConnection(mail, password);
             if (user != null) {
-                System.out.println("l'utilisateur " + user.getMail() + " est connecté");
-                createAnnonce = new CreateAnnonce();
-                createAnnonce.pack();
-                createAnnonce.setVisible(true);
+                annoncesView = new AnnoncesView(user);
+                annoncesView.pack();
+                annoncesView.setVisible(true);
             } else {
                 JOptionPane.showInternalMessageDialog(accueil, "Votre login et votre mot de passe ne correspondent pas.");
             }
@@ -45,11 +42,8 @@ public class SignInView extends JFrame {
         });
 
         inscrivezVousButton.addActionListener(actionEvent -> {
-            //JOptionPane.showMessageDialog(accueil, "aahajgkdsg");
-            System.out.println("click");
             signUpView = new SignUpView();
             signUpView.setContentPane(signUpView.signUpPanel);
-            //signUpForm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             signUpView.pack();
             signUpView.setVisible(true);
 
@@ -58,16 +52,14 @@ public class SignInView extends JFrame {
     }
 
     /**
-     * AJout + redimensionnement de l'image
+     * Ajout + redimensionnement de l'image
      */
     public void addLogo() {
         logo = new ImageIcon(getClass().getResource("../ressources/logo.png")); // load the image to a imageIcon
         Image image = logo.getImage(); // transform it
         Image newimg = image.getScaledInstance(120, 30, Image.SCALE_SMOOTH); // scale it the smooth way
         logo = new ImageIcon(newimg);  // transform it back
-
         img.setIcon(logo);
-        //img.setPreferredSize(new Dimension(120,30));
         accueil.add(img);
     }
 

@@ -34,7 +34,7 @@ public class AnnonceView extends JFrame{
     private JPanel commentaires;
     private static int index = 0;
 
-    public AnnonceView(){
+    public AnnonceView(UserEntity user, AnnonceEntity annonceEntity) {
         add(jp_annonce);
         ta_comment.setLineWrap(true);
         setTitle("Le détail d'une annonce");
@@ -43,14 +43,12 @@ public class AnnonceView extends JFrame{
         commentaires.setPreferredSize(new Dimension(900, 800));
         commentaires.setLayout(new BoxLayout(commentaires, BoxLayout.Y_AXIS));
 
-        AnnonceDAO annonceDAO = new AnnonceDAO();
         UserDAO userDAO = new UserDAO();
         ImageDAO imageDAO = new ImageDAO();
-        AnnonceEntity annonceEntity = annonceDAO.fetch(1);
         CommentDAO commentDAO = new CommentDAO();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
         String today = LocalDate.now().format(dateTimeFormatter);
-        java.util.List<CommentEntity> comment = commentDAO.fetchAll();
+        java.util.List<CommentEntity> comment = commentDAO.fetchAllById(annonceEntity.getIdAnnonce());
         for (CommentEntity coEntity : comment) {
             UserEntity userEntity = userDAO.fetch(coEntity.getIdUser());
             CommentItem newComment = new CommentItem(coEntity.getComment(), userEntity.getNom(), today);
@@ -93,6 +91,7 @@ public class AnnonceView extends JFrame{
                     sold.setText("Vendu");
                     lb_prix.setText("Objet vendu");
                     acheterButton.setEnabled(false);
+                    AnnonceDAO annonceDAO = new AnnonceDAO();
                     annonceDAO.update(annonceEntity);
                 } else {
                     return;

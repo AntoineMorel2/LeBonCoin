@@ -91,6 +91,30 @@ public class CommentDAO extends DAO<CommentEntity> {
     }
 
     /**
+     * Recupère une Liste de tous les commentaires lié a une annonce
+     *
+     * @return Une liste de commentaires ou null
+     */
+    @SuppressWarnings("unchecked")
+    public List<CommentEntity> fetchAllById(int idAnnonce) {
+        EntityManager entityManager = null;
+        try {
+            entityManager = getEntityManager();
+            final Query query;
+            query = entityManager.createQuery("SELECT a FROM CommentEntity a WHERE idAnnonce LIKE :id", CommentEntity.class);
+            query.setParameter("id", idAnnonce);
+            return (List<CommentEntity>) query.getResultList();
+        } catch (PersistenceException e) {
+            System.out.println("Unable to fetch all the CommentEntity");
+            return null;
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+    }
+
+    /**
      * Ne pas utiliser cette méthode pour les commentaires
      *
      * @param name Ne pas utiliser

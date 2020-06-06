@@ -4,6 +4,7 @@ import DAO.AnnonceDAO;
 import DAO.ImageDAO;
 import hibernate.AnnonceEntity;
 import hibernate.ImageEntity;
+import hibernate.UserEntity;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,6 +15,8 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -27,7 +30,7 @@ public class CreateAnnonce extends JFrame {
     private JButton ajouterUneImageButton;
     private JPanel jp_image;
 
-    public CreateAnnonce() {
+    public CreateAnnonce(UserEntity userConnected) {
         add(createannonce);
 
         setTitle("Création d'une annonce");
@@ -40,13 +43,11 @@ public class CreateAnnonce extends JFrame {
         // Init image par défaut
         ImageEntity imageEntity = new ImageEntity();
         imageEntity.setIdAnnonce(annonceEntity.getIdAnnonce());
-        imageEntity.setPath("../ressources/logo.png");
-        imageEntity.setName("logo.png");
+        imageEntity.setPath("");
+        imageEntity.setName("");
 
         setPreferredSize(new Dimension(500, 500));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        JScrollPane scrollPane = new JScrollPane(ta_desciption);
-//        add(scrollPane);
 
         ajouterUneImageButton.addActionListener(new ActionListener() {
             @Override
@@ -63,11 +64,9 @@ public class CreateAnnonce extends JFrame {
                         BufferedImage myPicture = ImageIO.read(selectedFile);
                         String filename = UUID.randomUUID().toString();
                         File f = new File("src/ressources/", filename + ".jpg");
-                        System.out.println(f.getPath());
-
-                        f.createNewFile();
-
-                        ImageIO.write(myPicture, "jpg", f);
+                        Path first = Path.of(selectedFile.toURI());
+                        Path second = Path.of(f.toURI());
+                        Files.copy(first, second);
 
 //                      new ImageEntity(f.getPath(), selectedFile.getName()));
                         imageEntity.setName(filename);
@@ -102,24 +101,24 @@ public class CreateAnnonce extends JFrame {
 
                 // init annonceEntity pour création
                 annonceEntity.setIdCategory(1);
-                annonceEntity.setIdUser(1);
+                annonceEntity.setIdUser(userConnected.getIdUser());
                 annonceEntity.setDateCreation(LocalDate.now());
                 annonceEntity.setTitle(tf_titre.getText());
                 annonceEntity.setDescription(ta_desciption.getText());
                 annonceEntity.setSold(false);
                 annonceEntity.setPrice(Float.parseFloat(tf_prix.getText()));
 
-                System.out.println(imageEntity);
-                System.out.println(imageEntity.getIdImage() + " " + imageEntity.getIdAnnonce() + " " + imageEntity.getName() + " " + imageEntity.getPath());
-
-
                 if (!annonceDAO.create(annonceEntity)) {
                     JOptionPane.showMessageDialog(createannonce, "Une erreur s'est produite pendant la création de l'annonce.");
+                    return;
                 }
                 imageEntity.setIdAnnonce(annonceDAO.fetchLast());
                 if (!imageDAO.create(imageEntity)) {
                     JOptionPane.showMessageDialog(createannonce, "Une erreur s'est produite pendant l'export de l'image.");
+                    return;
                 }
+
+                dispose();
             }
         });
     }
