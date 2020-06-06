@@ -4,20 +4,20 @@
     <facet type="jpa" name="JPA">
       <configuration>
         <setting name="validation-enabled" value="true" />
-        <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="NewPersistenceUnit" value="3cb0fdad-4bcd-478a-a6a9-c2a59022da2c" />
+          <factory-entry name="NewPersistenceUnit" />
         </datasource-mapping>
         <naming-strategy-map />
-        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/META-INF/persistence.xml" />
+        <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/out/production/LeBonCoin/META-INF/persistence.xml" />
       </configuration>
     </facet>
     <facet type="hibernate" name="Hibernate">
       <configuration>
         <datasource-map>
-          <unit-entry name="hibernate.cfg.xml" value="3cb0fdad-4bcd-478a-a6a9-c2a59022da2c" />
+          <unit-entry name="hibernate.cfg.xml" />
         </datasource-map>
         <naming-strategy-map />
+        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/out/production/LeBonCoin/hibernate.cfg.xml" />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/hibernate.cfg.xml" />
       </configuration>
     </facet>
@@ -29,10 +29,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.thymeleaf:thymeleaf:Release" level="project" />
-    <orderEntry type="library" name="JPA 2.2-2.2" level="project" />
-    <orderEntry type="library" name="Hibernate 5.4.11-5.4.11" level="project" />
-    <orderEntry type="library" name="Maven: org.thymeleaf:thymeleaf-spring4:Release" level="project" />
-    <orderEntry type="library" name="mysql:mysql-connector-java:8.0.19" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

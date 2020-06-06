@@ -20,7 +20,5 @@ public class SignUpView extends JFrame{
 
         setTitle("Inscription");
         setPreferredSize(new Dimension(500, 500));
-
-        //signUpPanel.add(annonceView, new com.intellij.uiDesigner.core.GridConstraints());
     }
 }
