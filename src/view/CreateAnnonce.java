@@ -97,28 +97,28 @@ public class CreateAnnonce extends JFrame {
                 String prix = tf_prix.getText();
                 String description = ta_desciption.getText();
                 JOptionPane.showMessageDialog(createannonce, "Données reçus : titre = " + titre + " prix = " + prix + " description = " + description);
-                JOptionPane.showConfirmDialog(createannonce, "Confirmer l'ajout de l'annonce " + titre + " ?");
+                int confirm = JOptionPane.showConfirmDialog(createannonce, "Confirmer l'ajout de l'annonce " + titre + " ?");
+                if (confirm == JOptionPane.OK_OPTION) {
+                    // init annonceEntity pour création
+                    annonceEntity.setIdCategory(1);
+                    annonceEntity.setIdUser(userConnected.getIdUser());
+                    annonceEntity.setDateCreation(LocalDate.now());
+                    annonceEntity.setTitle(tf_titre.getText());
+                    annonceEntity.setDescription(ta_desciption.getText());
+                    annonceEntity.setSold(false);
+                    annonceEntity.setPrice(Float.parseFloat(tf_prix.getText()));
 
-                // init annonceEntity pour création
-                annonceEntity.setIdCategory(1);
-                annonceEntity.setIdUser(userConnected.getIdUser());
-                annonceEntity.setDateCreation(LocalDate.now());
-                annonceEntity.setTitle(tf_titre.getText());
-                annonceEntity.setDescription(ta_desciption.getText());
-                annonceEntity.setSold(false);
-                annonceEntity.setPrice(Float.parseFloat(tf_prix.getText()));
-
-                if (!annonceDAO.create(annonceEntity)) {
-                    JOptionPane.showMessageDialog(createannonce, "Une erreur s'est produite pendant la création de l'annonce.");
-                    return;
+                    if (!annonceDAO.create(annonceEntity)) {
+                        JOptionPane.showMessageDialog(createannonce, "Une erreur s'est produite pendant la création de l'annonce.");
+                        return;
+                    }
+                    imageEntity.setIdAnnonce(annonceDAO.fetchLast());
+                    if (!imageDAO.create(imageEntity)) {
+                        JOptionPane.showMessageDialog(createannonce, "Une erreur s'est produite pendant l'export de l'image.");
+                        return;
+                    }
+                    dispose();
                 }
-                imageEntity.setIdAnnonce(annonceDAO.fetchLast());
-                if (!imageDAO.create(imageEntity)) {
-                    JOptionPane.showMessageDialog(createannonce, "Une erreur s'est produite pendant l'export de l'image.");
-                    return;
-                }
-
-                dispose();
             }
         });
     }

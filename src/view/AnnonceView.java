@@ -106,7 +106,6 @@ public class AnnonceView extends JFrame{
                 CommentItem currentComment = new CommentItem(ta_comment.getText(), user.getNom(), today);
                 CommentEntity comment = new CommentEntity(annonceEntity.getIdAnnonce(), user.getIdUser(), LocalDate.now(), ta_comment.getText());
                 commentDAO.create(comment);
-                currentComment.setForeground(Color.white);
                 commentaires.add(currentComment);
                 commentaires.updateUI();
                 ta_comment.setText("");
