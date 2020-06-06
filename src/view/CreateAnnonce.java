@@ -53,7 +53,6 @@ public class CreateAnnonce extends JFrame {
         imageEntity.setName("");
 
         setPreferredSize(new Dimension(500, 500));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Remplissage JComboBox
         List<CategoryEntity> categoryEntityList = categoryDAO.fetchAll();

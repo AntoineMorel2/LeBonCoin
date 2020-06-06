@@ -68,10 +68,10 @@
       </component>
       <component id="beb1a" class="javax.swing.JLabel">
         <constraints>
-          <grid row="4" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="0" row-span="1" col-span="7" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Mes annonces"/>
+          <text value="Mes annonces:"/>
         </properties>
       </component>
       <component id="3e781" class="javax.swing.JButton" binding="déconnexionButton" default-binding="true">

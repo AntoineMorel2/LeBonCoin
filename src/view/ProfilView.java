@@ -24,7 +24,7 @@ public class ProfilView extends JFrame {
     public ProfilView(UserEntity userConnected){
         add(jp_profil);
         setTitle("Fenêtre du profil");
-        setPreferredSize(new Dimension(1200, 800));
+        setPreferredSize(new Dimension(1500, 800));
 
         AnnonceDAO annonceDAO = new AnnonceDAO();
         ImageDAO imageDAO = new ImageDAO();

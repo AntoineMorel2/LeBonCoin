@@ -38,7 +38,7 @@ public class AnnoncesView extends JFrame{
     public AnnoncesView(UserEntity userConnected) {
         add(annoncesPanel);
         setTitle("LeCoinBon");
-        setPreferredSize(new Dimension(1500, 600));
+        setPreferredSize(new Dimension(1500, 800));
         panelAnnonces.setLayout(new BoxLayout(panelAnnonces, BoxLayout.Y_AXIS));
 
         // redefinir le layout permet de placer les éléments soient les uns en dessous des autres

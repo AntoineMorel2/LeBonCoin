@@ -38,7 +38,7 @@ public class AnnonceView extends JFrame{
         add(jp_annonce);
         ta_comment.setLineWrap(true);
         setTitle("Le détail d'une annonce");
-        setPreferredSize(new Dimension(1500, 600));
+        setPreferredSize(new Dimension(1500, 800));
         // redefinir le layout permet de placer les éléments soient les uns en dessous des autres
         commentaires.setLayout(new BoxLayout(commentaires, BoxLayout.Y_AXIS));
 
