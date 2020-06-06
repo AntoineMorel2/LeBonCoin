@@ -1,7 +1,6 @@
 package view;
 
 import DAO.AnnonceDAO;
-import DAO.CategoryDAO;
 import DAO.ImageDAO;
 import hibernate.AnnonceEntity;
 import hibernate.ImageEntity;
@@ -11,9 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
 public class ProfilView extends JFrame {
     private JPanel jp_profil;
@@ -23,8 +19,7 @@ public class ProfilView extends JFrame {
     private JButton déconnexionButton;
     private JScrollPane jscrollPane;
     private JPanel panelAnonces;
-
-    private static int count;
+    private JButton retourButton;
 
     public ProfilView(UserEntity userConnected){
         add(jp_profil);
@@ -33,15 +28,26 @@ public class ProfilView extends JFrame {
 
         AnnonceDAO annonceDAO = new AnnonceDAO();
         ImageDAO imageDAO = new ImageDAO();
-        CategoryDAO categoryDAO = new CategoryDAO();
+
+        // Remplir les labels liés à l'utilisateurs
+        lb_nom.setText(userConnected.getNom());
+        lb_prenom.setText(userConnected.getPrenom());
+        lb_mail.setText(userConnected.getMail());
+
         // Remplir la liste des annonces postées par l'utilisateur
-        fillList(annonceDAO.fetchAll(), imageDAO, userConnected);
+        fillList(annonceDAO.fetchFromUser(userConnected.getIdUser()), imageDAO, userConnected);
+
+        retourButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                dispose();
+            }
+        });
 
         déconnexionButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //code pour gérer la déconnexion et renvoyer sur la fenêtre de connexion
             }
         });
     }

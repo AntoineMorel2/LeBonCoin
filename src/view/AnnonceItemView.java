@@ -15,12 +15,9 @@ public class AnnonceItemView extends JPanel {
     private JLabel prix;
     private JLabel description;
     private JPanel imagePanel;
-    private AnnonceEntity annonce;
-    private UserEntity user;
 
     public AnnonceItemView(UserEntity user, String path, String title, String price, String description, AnnonceEntity annonceEntity) {
         add(annonceView);
-        this.user = user;
         titreAnnonce.setText(title);
         prix.setText(price);
         this.description.setText(description);
