@@ -1,8 +1,10 @@
 package view;
 
 import DAO.AnnonceDAO;
+import DAO.CategoryDAO;
 import DAO.ImageDAO;
 import hibernate.AnnonceEntity;
+import hibernate.CategoryEntity;
 import hibernate.ImageEntity;
 import hibernate.UserEntity;
 
@@ -10,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.List;
 
 public class AnnoncesView extends JFrame{
     private JTextField textFieldRecherche;
@@ -20,6 +23,8 @@ public class AnnoncesView extends JFrame{
     private JButton posterUneAnnonceButton;
     private JButton monProfilButton;
     private JPanel imagePanel;
+    private JComboBox comboBoxCategories;
+    private JButton rechercheButton;
 
     private ImageIcon logo;
 
@@ -39,8 +44,15 @@ public class AnnoncesView extends JFrame{
 
         AnnonceDAO annonceDAO = new AnnonceDAO();
         ImageDAO imageDAO = new ImageDAO();
+        CategoryDAO categoryDAO = new CategoryDAO();
         fillList(annonceDAO, imageDAO, userConnected);
         addLogo();
+
+        // Remplissage JComboBox
+        List<CategoryEntity> categoryEntityList = categoryDAO.fetchAll();
+        for(CategoryEntity categoryEntity : categoryEntityList) {
+            comboBoxCategories.addItem(categoryEntity.getName());
+        }
 
         posterUneAnnonceButton.addActionListener(actionEvent -> {
             CreateAnnonce annonceCreation = new CreateAnnonce(userConnected);
