@@ -35,6 +35,8 @@ public class SignInView extends JFrame {
                 annoncesView = new AnnoncesView(user);
                 annoncesView.pack();
                 annoncesView.setVisible(true);
+                textField1.setText("");
+                passwordField1.setText("");
             } else {
                 JOptionPane.showInternalMessageDialog(accueil, "Votre login et votre mot de passe ne correspondent pas.");
             }

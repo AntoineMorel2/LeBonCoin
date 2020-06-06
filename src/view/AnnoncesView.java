@@ -10,8 +10,6 @@ import hibernate.UserEntity;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.List;
@@ -72,6 +70,7 @@ public class AnnoncesView extends JFrame{
                 profilView = new ProfilView(userConnected);
                 profilView.pack();
                 profilView.setVisible(true);
+                dispose();
             } else {
                 JOptionPane.showInternalMessageDialog(annoncesPanel, "Erreur d'accès à votre compte");
             }

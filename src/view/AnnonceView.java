@@ -32,6 +32,7 @@ public class AnnonceView extends JFrame{
     private JLabel lb_categorie;
     private JLabel categorie;
     private JButton retourVersLesAnnoncesButton;
+    private JLabel userName;
     private static int index = 0;
 
     public AnnonceView(UserEntity user, AnnonceEntity annonceEntity) {
@@ -43,6 +44,8 @@ public class AnnonceView extends JFrame{
         commentaires.setLayout(new BoxLayout(commentaires, BoxLayout.Y_AXIS));
 
         UserDAO userDAO = new UserDAO();
+        UserEntity annonceCreator = userDAO.fetch(annonceEntity.getIdUser());
+        userName.setText(annonceCreator.getNom() + " " + annonceCreator.getPrenom());
         ImageDAO imageDAO = new ImageDAO();
         CommentDAO commentDAO = new CommentDAO();
         CategoryDAO categoryDAO = new CategoryDAO();
@@ -103,7 +106,6 @@ public class AnnonceView extends JFrame{
         envoyerUnCommentaireButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                UserEntity user = userDAO.fetch(annonceEntity.getIdUser());
                 CommentItem currentComment = new CommentItem(ta_comment.getText(), user.getNom(), today);
                 CommentEntity comment = new CommentEntity(annonceEntity.getIdAnnonce(), user.getIdUser(), LocalDate.now(), ta_comment.getText());
                 commentDAO.create(comment);

@@ -40,6 +40,9 @@ public class ProfilView extends JFrame {
         retourButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                AnnoncesView annoncesView = new AnnoncesView(userConnected);
+                annoncesView.pack();
+                annoncesView.setVisible(true);
                 dispose();
             }
         });
@@ -48,6 +51,7 @@ public class ProfilView extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                dispose();
             }
         });
     }
