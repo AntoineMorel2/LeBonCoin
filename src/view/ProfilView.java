@@ -1,22 +1,42 @@
 package view;
 
+import DAO.AnnonceDAO;
+import DAO.CategoryDAO;
+import DAO.ImageDAO;
+import hibernate.AnnonceEntity;
+import hibernate.ImageEntity;
+import hibernate.UserEntity;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 public class ProfilView extends JFrame {
     private JPanel jp_profil;
     private JLabel lb_nom;
     private JLabel lb_prenom;
     private JLabel lb_mail;
-    private JList liste_annonces;
     private JButton déconnexionButton;
+    private JScrollPane jscrollPane;
+    private JPanel panelAnonces;
 
-    public ProfilView(){
+    private static int count;
+
+    public ProfilView(UserEntity userConnected){
         add(jp_profil);
         setTitle("Fenêtre du profil");
-        setPreferredSize(new Dimension(500, 500));
+        setPreferredSize(new Dimension(1200, 800));
+
+        AnnonceDAO annonceDAO = new AnnonceDAO();
+        ImageDAO imageDAO = new ImageDAO();
+        CategoryDAO categoryDAO = new CategoryDAO();
+        // Remplir la liste des annonces postées par l'utilisateur
+        fillList(annonceDAO.fetchAll(), imageDAO, userConnected);
+
         déconnexionButton.addActionListener(new ActionListener() {
 
             @Override
@@ -24,5 +44,18 @@ public class ProfilView extends JFrame {
                 //code pour gérer la déconnexion et renvoyer sur la fenêtre de connexion
             }
         });
+    }
+
+    private void fillList(java.util.List<AnnonceEntity> annonceEntities, ImageDAO imageDAO, UserEntity userConnected) {
+        panelAnonces.setLayout(new BoxLayout(panelAnonces, BoxLayout.Y_AXIS));
+        for (AnnonceEntity annonce : annonceEntities) {
+            ImageEntity image = imageDAO.fetchbyAnnonceId(annonce.getIdAnnonce());
+            String path = "src/ressources/" + image.getName() + ".jpg";
+            AnnonceItemView annonceView = new AnnonceItemView(userConnected, path, annonce.getTitle(),
+                    Float.toString(annonce.getPrice()), annonce.getDescription(), annonce);
+            //panelAnonces.setLayout(new BoxLayout(panelAnonces, BoxLayout.Y_AXIS));
+            panelAnonces.add(annonceView);
+        }
+        jscrollPane.updateUI();
     }
 }

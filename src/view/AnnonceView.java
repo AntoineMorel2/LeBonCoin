@@ -40,7 +40,6 @@ public class AnnonceView extends JFrame{
         setTitle("Le détail d'une annonce");
         setPreferredSize(new Dimension(1500, 600));
         // redefinir le layout permet de placer les éléments soient les uns en dessous des autres
-        commentaires.setPreferredSize(new Dimension(900, 800));
         commentaires.setLayout(new BoxLayout(commentaires, BoxLayout.Y_AXIS));
 
         UserDAO userDAO = new UserDAO();

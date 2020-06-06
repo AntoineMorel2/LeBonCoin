@@ -27,7 +27,8 @@ public class AnnoncesView extends JFrame{
     private JPanel imagePanel;
     private JComboBox comboBoxCategories;
     private JButton rechercheButton;
-    private static int count;
+
+    private static ProfilView profilView;
 
     private ImageIcon logo;
 
@@ -38,15 +39,8 @@ public class AnnoncesView extends JFrame{
         add(annoncesPanel);
         setTitle("LeCoinBon");
         setPreferredSize(new Dimension(1500, 600));
-        panelAnnonces.setPreferredSize(new Dimension(1000, 800));
         panelAnnonces.setLayout(new BoxLayout(panelAnnonces, BoxLayout.Y_AXIS));
-        scrollAnnonces.setPreferredSize(new Dimension(1000, 800));
-        scrollAnnonces.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-            @Override
-            public void adjustmentValueChanged(AdjustmentEvent adjustmentEvent) {
-                panelAnnonces.setPreferredSize(new Dimension(1000, count * 100 + 800));
-            }
-        });
+
         // redefinir le layout permet de placer les éléments soient les uns en dessous des autres
 
         AnnonceDAO annonceDAO = new AnnonceDAO();
@@ -72,6 +66,17 @@ public class AnnoncesView extends JFrame{
             java.util.List<AnnonceEntity> annonceEntities = annonceDAO.fetchByName(textFieldRecherche.getText());
             fillList(annonceEntities, imageDAO, userConnected);
         });
+
+        monProfilButton.addActionListener(actionEvent -> {
+            if (userConnected != null) {
+                profilView = new ProfilView(userConnected);
+                profilView.pack();
+                profilView.setVisible(true);
+            } else {
+                JOptionPane.showInternalMessageDialog(annoncesPanel, "Erreur d'accès à votre compte");
+            }
+        });
+
         posterUneAnnonceButton.addActionListener(actionEvent -> {
             CreateAnnonce annonceCreation = new CreateAnnonce(userConnected);
             annonceCreation.pack();
@@ -138,15 +143,12 @@ public class AnnoncesView extends JFrame{
 
     private void fillList(java.util.List<AnnonceEntity> annonceEntities, ImageDAO imageDAO, UserEntity userConnected) {
         panelAnnonces.removeAll();
-        count = 0;
         for (AnnonceEntity annonce : annonceEntities) {
             ImageEntity image = imageDAO.fetchbyAnnonceId(annonce.getIdAnnonce());
             String path = "src/ressources/" + image.getName() + ".jpg";
             AnnonceItemView annonceView = new AnnonceItemView(userConnected, path, annonce.getTitle(),
                     Float.toString(annonce.getPrice()), annonce.getDescription(), annonce);
             panelAnnonces.add(annonceView);
-            count++;
-            panelAnnonces.revalidate();
         }
         scrollAnnonces.updateUI();
     }
