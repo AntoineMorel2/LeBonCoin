@@ -31,6 +31,7 @@ public class AnnonceView extends JFrame{
     private JPanel commentaires;
     private JLabel lb_categorie;
     private JLabel categorie;
+    private JButton retourVersLesAnnoncesButton;
     private static int index = 0;
 
     public AnnonceView(UserEntity user, AnnonceEntity annonceEntity) {
@@ -112,6 +113,13 @@ public class AnnonceView extends JFrame{
                 commentaires.updateUI();
                 ta_comment.setText("");
 
+            }
+        });
+
+        retourVersLesAnnoncesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                dispose();
             }
         });
     }
