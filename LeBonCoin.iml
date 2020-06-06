@@ -7,7 +7,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="NewPersistenceUnit" value="3cb0fdad-4bcd-478a-a6a9-c2a59022da2c" />
-          <factory-entry name="leBonCoinEM" value="3cb0fdad-4bcd-478a-a6a9-c2a59022da2c" />
+          <factory-entry name="leBonCoinEM" value="2bb7f3ad-b5d0-43f2-b24a-4edf1d94aa19" />
         </datasource-mapping>
         <naming-strategy-map />
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/META-INF/persistence.xml" />
@@ -35,5 +35,6 @@
     <orderEntry type="library" name="Hibernate 5.4.11-5.4.11" level="project" />
     <orderEntry type="library" name="Maven: org.thymeleaf:thymeleaf-spring4:Release" level="project" />
     <orderEntry type="library" name="mysql:mysql-connector-java:8.0.19" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>
