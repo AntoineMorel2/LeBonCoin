@@ -19,7 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDate;
+import java.time.*;
 import java.util.List;
 import java.util.UUID;
 
@@ -110,12 +110,17 @@ public class CreateAnnonce extends JFrame {
                     JOptionPane.showMessageDialog(createannonce, "Veuillez renseigner tous les champs");
                     return;
                 }
-                JOptionPane.showMessageDialog(createannonce, "Données reçus : titre = " + titre + " prix = " + prix + " description = " + description);
+                if(!estUnEntier(prix)) {
+                    JOptionPane.showMessageDialog(createannonce, "Veuillez renseigner un prix valide");
+                    return;
+                }
                 int confirm = JOptionPane.showConfirmDialog(createannonce, "Confirmer l'ajout de l'annonce " + titre + " ?");
                 if (confirm == JOptionPane.OK_OPTION) {
                     // init annonceEntity pour création
                     annonceEntity.setIdUser(userConnected.getIdUser());
-                    annonceEntity.setDateCreation(LocalDate.now());
+                    // On n'a rien vu
+                    LocalDate now = LocalDate.now().plusDays(1);
+                    annonceEntity.setDateCreation(now);
                     annonceEntity.setTitle(tf_titre.getText());
                     annonceEntity.setDescription(ta_desciption.getText());
                     annonceEntity.setSold(false);
@@ -135,5 +140,15 @@ public class CreateAnnonce extends JFrame {
                 }
             }
         });
+    }
+
+    public boolean estUnEntier(String chaine) {
+        try {
+            Float.parseFloat(chaine);
+        } catch (NumberFormatException e){
+            return false;
+        }
+
+        return true;
     }
 }

@@ -33,6 +33,8 @@ public class AnnonceView extends JFrame{
     private JLabel categorie;
     private JButton retourVersLesAnnoncesButton;
     private JLabel userName;
+    private JLabel ajouteLe;
+    private JLabel lb_dateAjout;
     private static int index = 0;
 
     public AnnonceView(UserEntity user, AnnonceEntity annonceEntity) {
@@ -40,7 +42,8 @@ public class AnnonceView extends JFrame{
         ta_comment.setLineWrap(true);
         setTitle("Le détail d'une annonce");
         setPreferredSize(new Dimension(1500, 800));
-        // redefinir le layout permet de placer les éléments soient les uns en dessous des autres
+
+        // redefinir le layout permet de placer les éléments les uns en dessous des autres
         commentaires.setLayout(new BoxLayout(commentaires, BoxLayout.Y_AXIS));
 
         UserDAO userDAO = new UserDAO();
@@ -49,8 +52,16 @@ public class AnnonceView extends JFrame{
         ImageDAO imageDAO = new ImageDAO();
         CommentDAO commentDAO = new CommentDAO();
         CategoryDAO categoryDAO = new CategoryDAO();
+
+        // date des commentaires
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
         String today = LocalDate.now().format(dateTimeFormatter);
+
+        // date de creation de l'annonce
+        String creationDate = annonceEntity.getDateCreation().format(dateTimeFormatter);
+        lb_dateAjout.setText(creationDate);
+
+        // ajout des commentaires
         java.util.List<CommentEntity> comment = commentDAO.fetchAllById(annonceEntity.getIdAnnonce());
         for (CommentEntity coEntity : comment) {
             UserEntity userEntity = userDAO.fetch(coEntity.getIdUser());
@@ -75,7 +86,7 @@ public class AnnonceView extends JFrame{
             ex.printStackTrace();
         }
         lb_titre.setText(annonceEntity.getTitle());
-        lb_prix.setText(Float.toString(annonceEntity.getPrice()));
+        lb_prix.setText(Float.toString(annonceEntity.getPrice())+"€");
         ta_description.setText(annonceEntity.getDescription());
         categorie.setText(categoryDAO.fetch(annonceEntity.getIdCategory()).getName());
         if (annonceEntity.isSold()) {

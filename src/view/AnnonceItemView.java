@@ -19,7 +19,7 @@ public class AnnonceItemView extends JPanel {
     public AnnonceItemView(UserEntity user, String path, String title, String price, String description, AnnonceEntity annonceEntity) {
         add(annonceView);
         titreAnnonce.setText(title);
-        prix.setText(price);
+        prix.setText(price+"€");
         this.description.setText(description);
         setPreferredSize(new Dimension(500, 200));
         addLogo(path);
