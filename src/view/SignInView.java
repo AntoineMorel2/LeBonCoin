@@ -17,7 +17,8 @@ public class SignInView extends JFrame {
     private ImageIcon logo;
 
     private static SignUpView signUpView;
-//    private static AnnoncesView annoncesView;
+    //    private static AnnoncesView annoncesView;
+    private static CreateAnnonce createAnnonce;
 
     public SignInView() {
         add(accueil);
@@ -34,11 +35,9 @@ public class SignInView extends JFrame {
             UserEntity user = userDAO.checkConnection(mail, password);
             if (user != null) {
                 System.out.println("l'utilisateur " + user.getMail() + " est connecté");
-                AnnonceView annonceView = new AnnonceView();
-                annonceView.setContentPane(annonceView.jp_annonce);
-                annonceView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                annonceView.pack();
-                annonceView.setVisible(true);
+                createAnnonce = new CreateAnnonce();
+                createAnnonce.pack();
+                createAnnonce.setVisible(true);
             } else {
                 JOptionPane.showInternalMessageDialog(accueil, "Votre login et votre mot de passe ne correspondent pas.");
             }
