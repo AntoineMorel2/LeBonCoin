@@ -64,7 +64,6 @@ public class CreateAnnonce extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-
                 final JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
                 int returnvalue = fc.showOpenDialog(createannonce);
                 if(returnvalue == JFileChooser.APPROVE_OPTION) {
@@ -107,6 +106,10 @@ public class CreateAnnonce extends JFrame {
                 String titre = tf_titre.getText();
                 String prix = tf_prix.getText();
                 String description = ta_desciption.getText();
+                if(titre.isEmpty() || prix.isEmpty() || description.isEmpty()) {
+                    JOptionPane.showMessageDialog(createannonce, "Veuillez renseigner tous les champs");
+                    return;
+                }
                 JOptionPane.showMessageDialog(createannonce, "Données reçus : titre = " + titre + " prix = " + prix + " description = " + description);
                 int confirm = JOptionPane.showConfirmDialog(createannonce, "Confirmer l'ajout de l'annonce " + titre + " ?");
                 if (confirm == JOptionPane.OK_OPTION) {
