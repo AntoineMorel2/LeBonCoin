@@ -44,7 +44,7 @@ public class AnnoncesView extends JFrame{
         scrollAnnonces.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
             @Override
             public void adjustmentValueChanged(AdjustmentEvent adjustmentEvent) {
-                panelAnnonces.setPreferredSize(new Dimension(1000, (int) (Math.exp(count) * 10 + 800)));
+                panelAnnonces.setPreferredSize(new Dimension(1000, count * 100 + 800));
             }
         });
         // redefinir le layout permet de placer les éléments soient les uns en dessous des autres
@@ -60,13 +60,18 @@ public class AnnoncesView extends JFrame{
         for(CategoryEntity categoryEntity : categoryEntityList) {
             comboBoxCategories.addItem(categoryEntity.getName());
         }
+        //Recherche par cate
+        rechercheButton.addActionListener(actionEvent -> {
+            int categoryId = categoryDAO.fetchByName((String) comboBoxCategories.getSelectedItem()).get(0).getIdCategory();
+            java.util.List<AnnonceEntity> annonceEntities = annonceDAO.fetchByCategory(categoryId);
+            fillList(annonceEntities, imageDAO, userConnected);
+        });
 
+        //Recherche par nom
         rechercherButton.addActionListener(actionEvent -> {
             java.util.List<AnnonceEntity> annonceEntities = annonceDAO.fetchByName(textFieldRecherche.getText());
             fillList(annonceEntities, imageDAO, userConnected);
         });
-
-
         posterUneAnnonceButton.addActionListener(actionEvent -> {
             CreateAnnonce annonceCreation = new CreateAnnonce(userConnected);
             annonceCreation.pack();

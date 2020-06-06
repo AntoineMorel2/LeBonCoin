@@ -70,6 +70,31 @@ public class AnnonceDAO extends DAO<AnnonceEntity>{
     }
 
     /**
+     * Cette méthode permet de récupèrer toutes les annonces créée par un utilisateur liée a une categorie.
+     *
+     * @param idCategorie la catégorie dont nous voulons les annonces
+     * @return une liste d'AnnonceEntité
+     */
+    @SuppressWarnings("unchecked")
+    public List<AnnonceEntity> fetchByCategory(int idCategorie) {
+        EntityManager entityManager = null;
+        try {
+            entityManager = getEntityManager();
+            final Query query;
+            query = entityManager.createQuery("SELECT a FROM AnnonceEntity a WHERE idCategory  LIKE :idCategory", AnnonceEntity.class);
+            query.setParameter("idCategory", idCategorie);
+            return (List<AnnonceEntity>) query.getResultList();
+        } catch (PersistenceException e) {
+            System.out.println("Unable to fetch the AnnonceEntity from the category with id " + idCategorie);
+            return null;
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+    }
+
+    /**
      * Recupère une AnnonceEntité liée a l'id fournie
      * @param id l'id dont nous voulons l'AnnonceEntité
      * @return Une AnnonceEntité ou null.
