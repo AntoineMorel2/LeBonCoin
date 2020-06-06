@@ -1,8 +1,10 @@
 package view;
 
 import DAO.AnnonceDAO;
+import DAO.CategoryDAO;
 import DAO.ImageDAO;
 import hibernate.AnnonceEntity;
+import hibernate.CategoryEntity;
 import hibernate.ImageEntity;
 import hibernate.UserEntity;
 
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 public class CreateAnnonce extends JFrame {
@@ -29,6 +32,8 @@ public class CreateAnnonce extends JFrame {
     private JButton ajouterLAnnonceButton;
     private JButton ajouterUneImageButton;
     private JPanel jp_image;
+    private JComboBox comboBoxCategories;
+    private JLabel categorie;
 
     public CreateAnnonce(UserEntity userConnected) {
         add(createannonce);
@@ -37,6 +42,7 @@ public class CreateAnnonce extends JFrame {
 
         AnnonceDAO annonceDAO = new AnnonceDAO();
         ImageDAO imageDAO = new ImageDAO();
+        CategoryDAO categoryDAO = new CategoryDAO();
 
         AnnonceEntity annonceEntity = new AnnonceEntity();
 
@@ -48,6 +54,12 @@ public class CreateAnnonce extends JFrame {
 
         setPreferredSize(new Dimension(500, 500));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Remplissage JComboBox
+        List<CategoryEntity> categoryEntityList = categoryDAO.fetchAll();
+        for(CategoryEntity categoryEntity : categoryEntityList) {
+            comboBoxCategories.addItem(categoryEntity.getName());
+        }
 
         ajouterUneImageButton.addActionListener(new ActionListener() {
             @Override
@@ -100,13 +112,13 @@ public class CreateAnnonce extends JFrame {
                 int confirm = JOptionPane.showConfirmDialog(createannonce, "Confirmer l'ajout de l'annonce " + titre + " ?");
                 if (confirm == JOptionPane.OK_OPTION) {
                     // init annonceEntity pour création
-                    annonceEntity.setIdCategory(1);
                     annonceEntity.setIdUser(userConnected.getIdUser());
                     annonceEntity.setDateCreation(LocalDate.now());
                     annonceEntity.setTitle(tf_titre.getText());
                     annonceEntity.setDescription(ta_desciption.getText());
                     annonceEntity.setSold(false);
                     annonceEntity.setPrice(Float.parseFloat(tf_prix.getText()));
+                    annonceEntity.setIdCategory(categoryDAO.fetchByName((String) comboBoxCategories.getSelectedItem()).get(0).getIdCategory());
 
                     if (!annonceDAO.create(annonceEntity)) {
                         JOptionPane.showMessageDialog(createannonce, "Une erreur s'est produite pendant la création de l'annonce.");

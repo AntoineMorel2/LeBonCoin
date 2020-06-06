@@ -92,16 +92,28 @@ public class CategoryDAO extends DAO<CategoryEntity> {
     }
 
     /**
-     * Ne pas utiliser cette méthode pour les categories
+     * Recherche d'une catégorie par nom
      *
-     * @param name Ne pas utiliser
-     * @return null
+     * @param name nom de la catégorie
+     * @return une liste de catégorie
      */
     @Override
     public List<CategoryEntity> fetchByName(String name) {
-        // DO NOT USE
-        System.out.println("This method isn't implemented, do not use it");
-        return null;
+        EntityManager entityManager = null;
+        try {
+            entityManager = getEntityManager();
+            final Query query;
+            query = entityManager.createQuery("SELECT a FROM CategoryEntity a WHERE name LIKE :name", CategoryEntity.class);
+            query.setParameter("name", "%" + name + "%");
+            return (List<CategoryEntity>) query.getResultList();
+        } catch (PersistenceException e) {
+            System.out.println("Unable to fetch the CategoryEntity with the following name " + name);
+            return null;
+        } finally {
+            if(entityManager != null) {
+                entityManager.close();
+            }
+        }
     }
 
     /**

@@ -1,8 +1,10 @@
 package view;
 
 import DAO.AnnonceDAO;
+import DAO.CategoryDAO;
 import DAO.ImageDAO;
 import hibernate.AnnonceEntity;
+import hibernate.CategoryEntity;
 import hibernate.ImageEntity;
 import hibernate.UserEntity;
 
@@ -12,6 +14,7 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.List;
 
 public class AnnoncesView extends JFrame{
     private JTextField textFieldRecherche;
@@ -22,6 +25,8 @@ public class AnnoncesView extends JFrame{
     private JButton posterUneAnnonceButton;
     private JButton monProfilButton;
     private JPanel imagePanel;
+    private JComboBox comboBoxCategories;
+    private JButton rechercheButton;
     private static int count;
 
     private ImageIcon logo;
@@ -46,8 +51,15 @@ public class AnnoncesView extends JFrame{
 
         AnnonceDAO annonceDAO = new AnnonceDAO();
         ImageDAO imageDAO = new ImageDAO();
+        CategoryDAO categoryDAO = new CategoryDAO();
         fillList(annonceDAO.fetchAll(), imageDAO, userConnected);
         addLogo();
+
+        // Remplissage JComboBox
+        List<CategoryEntity> categoryEntityList = categoryDAO.fetchAll();
+        for(CategoryEntity categoryEntity : categoryEntityList) {
+            comboBoxCategories.addItem(categoryEntity.getName());
+        }
 
         rechercherButton.addActionListener(actionEvent -> {
             java.util.List<AnnonceEntity> annonceEntities = annonceDAO.fetchByName(textFieldRecherche.getText());

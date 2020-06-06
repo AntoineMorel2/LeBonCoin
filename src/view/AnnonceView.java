@@ -1,9 +1,6 @@
 package view;
 
-import DAO.AnnonceDAO;
-import DAO.CommentDAO;
-import DAO.ImageDAO;
-import DAO.UserDAO;
+import DAO.*;
 import hibernate.AnnonceEntity;
 import hibernate.CommentEntity;
 import hibernate.UserEntity;
@@ -32,6 +29,9 @@ public class AnnonceView extends JFrame{
     private JLabel sold;
     private JScrollPane scrollCommentaire;
     private JPanel commentaires;
+    private JLabel lb_categorie;
+    private JLabel categorie;
+    private JButton retourVersLesAnnoncesButton;
     private static int index = 0;
 
     public AnnonceView(UserEntity user, AnnonceEntity annonceEntity) {
@@ -46,6 +46,7 @@ public class AnnonceView extends JFrame{
         UserDAO userDAO = new UserDAO();
         ImageDAO imageDAO = new ImageDAO();
         CommentDAO commentDAO = new CommentDAO();
+        CategoryDAO categoryDAO = new CategoryDAO();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
         String today = LocalDate.now().format(dateTimeFormatter);
         java.util.List<CommentEntity> comment = commentDAO.fetchAllById(annonceEntity.getIdAnnonce());
@@ -74,6 +75,7 @@ public class AnnonceView extends JFrame{
         lb_titre.setText(annonceEntity.getTitle());
         lb_prix.setText(Float.toString(annonceEntity.getPrice()));
         ta_description.setText(annonceEntity.getDescription());
+        categorie.setText(categoryDAO.fetch(annonceEntity.getIdCategory()).getName());
         if (annonceEntity.isSold()) {
             sold.setText("Vendu");
             acheterButton.setEnabled(false);
@@ -110,6 +112,13 @@ public class AnnonceView extends JFrame{
                 commentaires.updateUI();
                 ta_comment.setText("");
 
+            }
+        });
+
+        retourVersLesAnnoncesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                dispose();
             }
         });
     }
