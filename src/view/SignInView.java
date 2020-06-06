@@ -13,7 +13,7 @@ public class SignInView extends JFrame {
     private JTextField textField1;
     private JButton connexion;
     private JButton inscrivezVousButton;
-    private JLabel img;
+    private JPanel imagePanel;
     private ImageIcon logo;
 
     private static SignUpView signUpView;
@@ -24,7 +24,7 @@ public class SignInView extends JFrame {
 
         setTitle("Connexion");
         setPreferredSize(new Dimension(500, 500));
-        addLogo();
+        addLogo("src/ressources/logo.png");
 
         connexion.addActionListener(actionEvent -> {
             UserDAO userDAO = new UserDAO();
@@ -54,13 +54,19 @@ public class SignInView extends JFrame {
     /**
      * Ajout + redimensionnement de l'image
      */
-    public void addLogo() {
-        logo = new ImageIcon(getClass().getResource("../ressources/logo.png")); // load the image to a imageIcon
+    public void addLogo(String path) {
+        /**
+         * AJout + redimensionnement de l'image
+         */
+        logo = new ImageIcon(path); // load the image to a imageIcon
         Image image = logo.getImage(); // transform it
-        Image newimg = image.getScaledInstance(120, 30, Image.SCALE_SMOOTH); // scale it the smooth way
+        Image newimg = image.getScaledInstance(130, 30, Image.SCALE_SMOOTH); // scale it the smooth way
         logo = new ImageIcon(newimg);  // transform it back
-        img.setIcon(logo);
-        accueil.add(img);
+
+        JLabel labelImg = new JLabel(logo);
+
+        imagePanel.add(labelImg);
+        imagePanel.updateUI();
     }
 
 }
