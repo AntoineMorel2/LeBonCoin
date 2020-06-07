@@ -40,6 +40,8 @@ public class AnnonceView extends JFrame{
     public AnnonceView(UserEntity user, AnnonceEntity annonceEntity) {
         add(jp_annonce);
         ta_comment.setLineWrap(true);
+        ta_description.setLineWrap(true);
+        ta_description.setWrapStyleWord(true);
         setTitle("Le détail d'une annonce");
         setPreferredSize(new Dimension(1500, 800));
 

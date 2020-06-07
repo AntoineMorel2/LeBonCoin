@@ -13,7 +13,7 @@ public class AnnonceItemView extends JPanel {
     public JPanel annonceView;
     private JLabel titreAnnonce;
     private JLabel prix;
-    private JLabel description;
+    private JTextArea description;
     private JPanel imagePanel;
 
     public AnnonceItemView(UserEntity user, String path, String title, String price, String description, AnnonceEntity annonceEntity) {
@@ -23,6 +23,11 @@ public class AnnonceItemView extends JPanel {
         this.description.setText(description);
         setPreferredSize(new Dimension(500, 200));
         addLogo(path);
+
+        this.description.setLineWrap(true);
+        this.description.setWrapStyleWord(true);
+        this.description.setEnabled(false);
+
         annonceView.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {

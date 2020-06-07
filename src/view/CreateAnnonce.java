@@ -40,6 +40,9 @@ public class CreateAnnonce extends JFrame {
 
         setTitle("Création d'une annonce");
 
+        ta_desciption.setLineWrap(true);
+        ta_desciption.setWrapStyleWord(true);
+
         AnnonceDAO annonceDAO = new AnnonceDAO();
         ImageDAO imageDAO = new ImageDAO();
         CategoryDAO categoryDAO = new CategoryDAO();

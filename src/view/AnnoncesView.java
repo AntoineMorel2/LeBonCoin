@@ -10,6 +10,8 @@ import hibernate.UserEntity;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.List;
@@ -36,7 +38,7 @@ public class AnnoncesView extends JFrame{
     public AnnoncesView(UserEntity userConnected) {
         add(annoncesPanel);
         setTitle("LeCoinBon");
-        setPreferredSize(new Dimension(1500, 800));
+        setPreferredSize(new Dimension(1420, 800));
         panelAnnonces.setLayout(new BoxLayout(panelAnnonces, BoxLayout.Y_AXIS));
 
         // redefinir le layout permet de placer les éléments soient les uns en dessous des autres
@@ -150,5 +152,6 @@ public class AnnoncesView extends JFrame{
             panelAnnonces.add(annonceView);
         }
         scrollAnnonces.updateUI();
+        pack();
     }
 }
